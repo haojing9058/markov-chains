@@ -1,6 +1,7 @@
 """Generate Markov text from text files."""
 
 from random import choice
+
 import sys
 
 def open_and_read_file(file_path):
@@ -15,7 +16,7 @@ def open_and_read_file(file_path):
     return text_data
 
 
-def make_chains(file_path):
+def make_chains(input_text):
     """Take input text as string; return dictionary of Markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
@@ -40,7 +41,7 @@ def make_chains(file_path):
         [None]
     """
 
-    contents = open_and_read_file(file_path)
+    contents = open_and_read_file(sys.argv[1])
 
     chains = {}
 
@@ -52,7 +53,7 @@ def make_chains(file_path):
         b = words[i + 1]
         # print "B equals: ",b
         pair = (a, b,)
-        #chains[pair] = []
+        # chains[pair] = []
         if chains.get(pair, False):
             c = words[i + 2]
             chains[pair].append(c)
@@ -63,7 +64,7 @@ def make_chains(file_path):
             chains[pair].append(c)
 
         # print "C equals: ", c
-        #chains[pair].append(c)
+        # chains[pair].append(c)
         # else add "" to dictionary
 
     return chains
@@ -74,6 +75,30 @@ def make_text(chains):
 
     words = []
 
+    # what word should we start on? "Would you"?
+    # dicitonaries are unordered, so what does "first key" mean?
+    # from which list you should pull out the random word?
+
+    # key 1st word (a)
+    # key 2nd word (b)
+    # random word from value ([list]) (c)
+    # value of b, c tuple
+
+    key_selection = choice(chains.keys())
+
+
+
+    first_word = key_selection[0]
+    second_word = key_selection[1]
+
+    third_word = choice(chains[(first_word, second_word,)])
+    # print first_word,second_word,third_word
+
+
+
+
+    # random.choice(chains)
+
     # your code goes here
 
     return " ".join(words)
@@ -82,7 +107,8 @@ def make_text(chains):
 input_path = "green-eggs.txt"
 
 # Open the file and turn it into one long string
-input_text = open_and_read_file(input_path)
+
+input_text = open_and_read_file(sys.argv[1])
 
 # Get a Markov chain
 chains = make_chains(input_text)
@@ -91,8 +117,3 @@ chains = make_chains(input_text)
 random_text = make_text(chains)
 
 print random_text
-
-# open_and_read_file(sys.argv[1])
-
-#text_data = open_and_read_file(sys.argv[1])
-print make_chains(file_path)
