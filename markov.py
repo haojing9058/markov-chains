@@ -46,13 +46,25 @@ def make_chains(text_data):
 
     words = contents.split()
 
-    for i in range(len(words) - 1):
+    for i in range(len(words) - 2):
         a = words[i]
+        # print "A equals: ",a
         b = words[i + 1]
+        # print "B equals: ",b
         pair = (a, b,)
-        chains[pair] = []
-        c = words[i + 2]
-        chains[pair].append(c)
+        #chains[pair] = []
+        if chains.get(pair, False):
+            c = words[i + 2]
+            chains[pair].append(c)
+            # how can we have an empty list as a value and not reset?
+        else:
+            c = words[i + 2]
+            chains[pair] = []
+            chains[pair].append(c)
+
+        # print "C equals: ", c
+        #chains[pair].append(c)
+        # else add "" to dictionary
 
     return chains
 
@@ -81,5 +93,5 @@ random_text = make_text(chains)
 print random_text
 
 # open_and_read_file(sys.argv[1])
-
+text_data = open_and_read_file(sys.argv[1])
 print make_chains(text_data)
