@@ -10,10 +10,9 @@ def open_and_read_file(file_path):
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
-    text_data = open(file_path)
-    text_data = text_data.read()
+    text_data = open(file_path).read()
     # print text_data
-    return text_datas
+    return text_data
 
 
 def make_chains(input_text):
@@ -41,32 +40,32 @@ def make_chains(input_text):
         [None]
     """
 
-    contents = open_and_read_file(sys.argv[1])
+    # contents = open_and_read_file(sys.argv[1])
 
     chains = {}
 
-    words = contents.split()
+    words = input_text.split()
 
     for i in range(len(words) - 2):
-        a = words[i]
-        # print "A equals: ",a
-        b = words[i + 1]
-        # print "B equals: ",b
+        a, b = words[i], words[i+1]
         pair = (a, b,)
-        # chains[pair] = []
-        if chains.get(pair, False):
-            c = words[i + 2]
-            chains[pair].append(c)
-            # how can we have an empty list as a value and not reset?
+
+        if pair in chains:
+            chains[pair] += [words[i+2]]
         else:
-            c = words[i + 2]
-            chains[pair] = []
-            chains[pair].append(c)
+            chains[pair] = [words[i+2]]
+        # if chains.get(pair, False):
+        #     c = words[i + 2]
+        #     chains[pair].append(c)
+        #     # how can we have an empty list as a value and not reset?
+        # else:
+        #     c = words[i + 2]
+        #     chains[pair] = []
+        #     chains[pair].append(c)
 
         # print "C equals: ", c
         # chains[pair].append(c)
         # else add "" to dictionary
-
     return chains
 
 
@@ -93,6 +92,8 @@ def make_text(chains):
 
         key_selection = (key_selection[1], new_word,)
 
+
+
     # print first_word,second_word,third_word
 
     # random.choice(chains)
@@ -101,8 +102,6 @@ def make_text(chains):
 
     return " ".join(words)
 
-
-input_path = "green-eggs.txt"
 
 # Open the file and turn it into one long string
 
