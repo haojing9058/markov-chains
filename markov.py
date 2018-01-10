@@ -13,10 +13,10 @@ def open_and_read_file(file_path):
     text_data = open(file_path)
     text_data = text_data.read()
     # print text_data
-    return text_datas
+    return text_data
 
 
-def make_chains(input_text):
+def make_chains(input_text, n):
     """Take input text as string; return dictionary of Markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
@@ -47,21 +47,35 @@ def make_chains(input_text):
 
     words = contents.split()
 
-    for i in range(len(words) - 2):
-        a = words[i]
-        # print "A equals: ",a
-        b = words[i + 1]
-        # print "B equals: ",b
-        pair = (a, b,)
-        # chains[pair] = []
-        if chains.get(pair, False):
-            c = words[i + 2]
-            chains[pair].append(c)
+    key_words = []
+
+    for i in range(len(words)-n):
+
+        if len(key_words) < n:
+            list(key_words).append(words[0 + i])
+
+
+
+    # a = words[i]
+    # # print "A equals: ",a
+    # b = words[i + 1]
+    # # print "B equals: ",b
+    # pair = (a, b,)
+    # # chains[pair] = []
+
+        key_words = tuple(key_words)
+        print key_words
+
+    # for j in range(len(words) - (n)):
+
+        if chains.get(key_words, False):
+            c = (words[i + (n)],)
+            key_words = key_words + c
             # how can we have an empty list as a value and not reset?
         else:
-            c = words[i + 2]
-            chains[pair] = []
-            chains[pair].append(c)
+            c = (words[i+ (n)],)
+            chains[key_words] = []
+            key_words = key_words + c
 
         # print "C equals: ", c
         # chains[pair].append(c)
@@ -109,7 +123,7 @@ input_path = "green-eggs.txt"
 input_text = open_and_read_file(sys.argv[1])
 
 # Get a Markov chain
-chains = make_chains(input_text)
+chains = make_chains(input_text, 5)
 
 # Produce random text
 random_text = make_text(chains)
