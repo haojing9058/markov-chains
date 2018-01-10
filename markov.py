@@ -15,7 +15,7 @@ def open_and_read_file(file_path):
     return text_data
 
 
-def make_chains(input_text):
+def make_chains(input_text, n):
     """Take input text as string; return dictionary of Markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
@@ -108,7 +108,7 @@ def make_text(chains):
 input_text = open_and_read_file(sys.argv[1])
 
 # Get a Markov chain
-chains = make_chains(input_text)
+chains = make_chains(input_text, 5)
 
 # Produce random text
 random_text = make_text(chains)
