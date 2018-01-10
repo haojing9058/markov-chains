@@ -13,7 +13,7 @@ def open_and_read_file(file_path):
     text_data = open(file_path)
     text_data = text_data.read()
     # print text_data
-    return text_data
+    return text_datas
 
 
 def make_chains(input_text):
