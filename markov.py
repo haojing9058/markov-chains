@@ -73,8 +73,6 @@ def make_chains(input_text):
 def make_text(chains):
     """Return text from chains."""
 
-    words = []
-
     # what word should we start on? "Would you"?
     # dicitonaries are unordered, so what does "first key" mean?
     # from which list you should pull out the random word?
@@ -86,16 +84,16 @@ def make_text(chains):
 
     key_selection = choice(chains.keys())
 
+    words = [key_selection[0], key_selection[1]]
 
+    while key_selection in chains:
+        new_word = choice(chains[key_selection])
 
-    first_word = key_selection[0]
-    second_word = key_selection[1]
+        words.append(new_word)
 
-    third_word = choice(chains[(first_word, second_word,)])
+        key_selection = (key_selection[1], new_word,)
+
     # print first_word,second_word,third_word
-
-
-
 
     # random.choice(chains)
 
